@@ -2,6 +2,7 @@ import React, { useMemo, useRef } from 'react'
 import { Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
+import CardActor from '../../components/CardActor'
 import Card from './Card'
 import Divider from './Divider'
 import * as S from './styles'
@@ -62,6 +63,23 @@ const Home = () => {
             loop
             autoplayDelay={4000}
             autoplayInterval={4000}
+          />
+        )
+      },
+      {
+        key: 'popular_actors',
+        render: () => <Divider title="Atores populares" />,
+        isTitle: true
+      },
+      {
+        key: 'actors',
+        render: () => (
+          <S.List
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+            horizontal
+            data={carouselItems}
+            renderItem={(item) => <CardActor />}
           />
         )
       }
