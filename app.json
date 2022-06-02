@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "movienow",
+    "slug": "movienow",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
