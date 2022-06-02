@@ -5,11 +5,12 @@ import * as S from './styles'
 
 interface IButton extends TouchableOpacityProps {
   title: string
+  color: string
 }
 
-const Button = ({ title, ...rest }: IButton) => {
+const Button = ({ title, color, ...rest }: IButton) => {
   return (
-    <S.Container {...rest}>
+    <S.Container color={color} {...rest}>
       <S.Title>{title}</S.Title>
     </S.Container>
   )

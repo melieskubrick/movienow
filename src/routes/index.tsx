@@ -1,10 +1,3 @@
-import React from 'react'
-
-import { NavigationContainer } from '@react-navigation/native'
-
-import MyStack from './stack.routes'
-import { ThemeProvider } from 'styled-components/native'
-
 import {
   useFonts,
   Montserrat_300Light,
@@ -13,9 +6,14 @@ import {
   Montserrat_600SemiBold,
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
+import { NavigationContainer } from '@react-navigation/native'
+import AppLoading from 'expo-app-loading'
+import React from 'react'
+import { ThemeProvider } from 'styled-components/native'
 
 import { theme } from '../theme'
-import AppLoading from 'expo-app-loading'
+import MyStack from './stack.routes'
+
 // import { Provider } from 'react-redux'
 // import store from '#/store'
 
@@ -24,14 +22,14 @@ if (__DEV__) {
 }
 
 function Routes() {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_300Light,
     Montserrat_400Regular,
     Montserrat_500Medium,
     Montserrat_600SemiBold,
     Montserrat_700Bold
   })
-  
+
   if (!fontsLoaded) return <AppLoading />
 
   return (
