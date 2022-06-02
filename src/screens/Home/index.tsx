@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
 import CardActor from '../../components/CardActor'
+import CardMovie from '../../components/CardMovie'
 import Card from './Card'
 import Divider from './Divider'
 import * as S from './styles'
@@ -80,6 +81,23 @@ const Home = () => {
             horizontal
             data={carouselItems}
             renderItem={(item) => <CardActor />}
+          />
+        )
+      },
+      {
+        key: 'evaluated',
+        render: () => <Divider title="Bem avaliados" />,
+        isTitle: true
+      },
+      {
+        key: 'movies',
+        render: () => (
+          <S.List
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+            horizontal
+            data={carouselItems}
+            renderItem={(item) => <CardMovie />}
           />
         )
       }

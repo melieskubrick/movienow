@@ -6,7 +6,7 @@ const CardActor = () => {
   return (
     <S.Container>
       <S.Image source={require('../../assets/images/sonic.jpeg')} />
-      <S.Title numberOfLines={2}>Teste Teste</S.Title>
+      <S.Title numberOfLines={2}>Jennifer Connelly</S.Title>
     </S.Container>
   )
 }
