@@ -1,15 +1,17 @@
 import Feather from '@expo/vector-icons/Feather'
 import { NavigationProp, RouteProp } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
+import { ScrollView } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import CardMovie from '../../components/CardMovie'
 import Loading from '../../components/Loading'
 import RoundButton from '../../components/RoundButton'
-import { getMovieDetail } from '../../services/api'
+import { getMovieDetail, getMovieSimilar } from '../../services/api'
 import { theme } from '../../theme'
 import { getImage } from '../../utils/helpers/image'
 import Divider from '../Home/Divider'
+import Tag from './Tag'
 import * as S from './styles'
 
 interface IDetailMovie {
@@ -21,12 +23,16 @@ const DetailMovie = ({ navigation, route }: IDetailMovie) => {
   const { id } = route.params
 
   const [movieDetail, setMovieDetail] = useState<MovieDetail>()
+  const [movieSimilar, setMovieSimilar] = useState<TrendingMovies | any>()
   const [loading, setLoading] = useState(true)
 
   const fetchData = useCallback(async () => {
     try {
       const responseMovieDetail = await getMovieDetail(id)
+      const responseMovieSimilar = await getMovieSimilar(id)
       setMovieDetail(responseMovieDetail.data)
+      setMovieSimilar(responseMovieSimilar.data.results)
+      console.log('MELIES:::', responseMovieSimilar.data.results)
     } catch (e) {
       console.log(e)
     } finally {
@@ -57,7 +63,6 @@ const DetailMovie = ({ navigation, route }: IDetailMovie) => {
           )}
           headerHeight={getStatusBarHeight() + 50}
           isHeaderFixed
-          // parallaxHeight={250}
           renderParallaxBackground={({ animatedValue }) => (
             <>
               <S.Gradient colors={['transparent', theme.colors.black]}></S.Gradient>
@@ -80,7 +85,33 @@ const DetailMovie = ({ navigation, route }: IDetailMovie) => {
             <S.ContainerInformations>
               <Divider title="Descrição" />
               <S.Description>{movieDetail.overview}</S.Description>
+              <Divider title="Gêneros" />
+              <S.List
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 24 }}
+                horizontal
+                data={movieDetail.genres}
+                renderItem={({ item }) => <Tag title={item.name} />}
+              />
             </S.ContainerInformations>
+            <Divider title="Filmes Similares" />
+            <S.List
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: getStatusBarHeight() }}
+              horizontal
+              data={movieSimilar}
+              renderItem={({ item }) => (
+                <CardMovie
+                  onPress={() => {
+                    setLoading(true)
+                    navigation.navigate('DetailMovie', { id: item.id })
+                  }}
+                  title={item.title}
+                  rate={item.vote_average + ` (${item.vote_count})`}
+                  uri={getImage(item.poster_path)}
+                />
+              )}
+            />
           </>
         </S.Parallax>
       )}

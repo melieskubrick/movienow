@@ -48,3 +48,5 @@ export const Description = styled.Text`
   font-family: 'Montserrat_300Light';
   color: ${({ theme }) => theme.colors.white};
 `
+
+export const List = styled.FlatList``

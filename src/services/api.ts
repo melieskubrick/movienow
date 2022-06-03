@@ -66,3 +66,15 @@ export const getMovieDetail = async (id: string): Promise<MovieDetail | any> => 
     return error
   }
 }
+
+export const getMovieSimilar = async (id: string): Promise<TrendingMovies | any> => {
+  try {
+    const obj = { ...defaultContent }
+    return await api.get(`movie/${id}/similar?${queryString(obj)}`)
+  } catch (error: any) {
+    if (error.response) {
+      return error.response
+    }
+    return error
+  }
+}
