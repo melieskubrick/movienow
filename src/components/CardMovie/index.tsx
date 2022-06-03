@@ -4,14 +4,20 @@ import React from 'react'
 import { theme } from '../../theme'
 import * as S from './styles'
 
-const CardMovie = () => {
+interface ICardMovie {
+  title: string
+  rate: string
+  uri: string
+}
+
+const CardMovie = ({ title, rate, uri }: ICardMovie) => {
   return (
     <S.Container>
-      <S.Image source={require('../../assets/images/sonic.jpeg')} />
-      <S.Title numberOfLines={2}>Um Sonho de Liberdade</S.Title>
+      <S.Image source={{ uri }} />
+      <S.Title numberOfLines={2}>{title}</S.Title>
       <S.ContainerStar>
         <Feather name="star" size={20} color={theme.colors.white} />
-        <S.StarCount>8.7</S.StarCount>
+        <S.StarCount>{rate}</S.StarCount>
       </S.ContainerStar>
     </S.Container>
   )
