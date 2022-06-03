@@ -14,7 +14,7 @@ export const Image = styled(ImageProgress).attrs({
 
 export const Title = styled.Text`
   font-size: 14px;
-  font-family: 'Montserrat_700Bold';
+  font-family: 'Montserrat_600SemiBold';
   color: ${({ theme }) => theme.colors.white};
   margin-top: 8px;
   width: 120px;

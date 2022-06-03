@@ -1,6 +1,6 @@
+import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions } from 'react-native'
 import ImageProgress from 'react-native-image-progress'
-import LinearGradient from 'react-native-linear-gradient'
 import styled from 'styled-components/native'
 
 export const Container = styled(ImageProgress).attrs({

@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>BVLinearGradient.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>DoubleConversion.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -59,6 +54,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ExpoLinearGradient.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ExpoModulesCore.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -90,11 +90,6 @@
 			<false/>
 		</dict>
 		<key>RCTTypeSafety.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>RNCMaskedView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

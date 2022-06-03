@@ -17,10 +17,6 @@ import MyStack from './stack.routes'
 // import { Provider } from 'react-redux'
 // import store from '#/store'
 
-if (__DEV__) {
-  import('../../reactotron')
-}
-
 function Routes() {
   const [fontsLoaded] = useFonts({
     Montserrat_300Light,
@@ -30,7 +26,7 @@ function Routes() {
     Montserrat_700Bold
   })
 
-  if (!fontsLoaded) return <AppLoading />
+  if (!fontsLoaded) return <></>
 
   return (
     <ThemeProvider theme={theme}>
