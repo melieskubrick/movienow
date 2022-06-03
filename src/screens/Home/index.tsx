@@ -107,7 +107,7 @@ const Home = ({ navigation }: IHome) => {
         render: () => (
           <S.List
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 20 }}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 24 }}
             horizontal
             data={topRated}
             renderItem={({ item }) => (
