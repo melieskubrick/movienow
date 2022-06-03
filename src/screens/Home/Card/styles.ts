@@ -31,3 +31,5 @@ export const Description = styled.Text`
   font-family: 'Montserrat_400Regular';
   color: ${({ theme }) => theme.colors.white};
 `
+
+export const Button = styled.TouchableOpacity``
