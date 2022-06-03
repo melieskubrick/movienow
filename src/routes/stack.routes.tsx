@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 
+import DetailMovie from '../screens/DetailMovie'
+
 /* Screens */
 import Home from '../screens/Home'
 import Welcome from '../screens/Welcome'
@@ -14,12 +16,13 @@ const Tab = createBottomTabNavigator()
 const tabBarLabelStyle = {
   fontFamily: theme.typography.bold,
   fontSize: 12,
-  marginBottom: 4
+  marginTop: 4
 }
 
 const tabBarStyle = {
   backgroundColor: theme.colors.primary,
-  borderTopColor: theme.colors.primary
+  borderTopColor: theme.colors.primary,
+  paddingTop: 4
 }
 
 const navConfig = {
@@ -63,6 +66,7 @@ const MyStack: React.FC = () => {
     <Stack.Navigator initialRouteName="Tabs">
       <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
       <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen name="DetailMovie" component={DetailMovie} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }
