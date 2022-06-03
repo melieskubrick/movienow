@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel'
 
 import CardActor from '../../components/CardActor'
 import CardMovie from '../../components/CardMovie'
+import Loading from '../../components/Loading'
 import { getPopularActors, getTopRated, getTrendings } from '../../services/api'
 import { getImage } from '../../utils/helpers/image'
 import Card from './Card'
@@ -21,15 +22,24 @@ const Home = () => {
   const [trendingMovies, setTrendingsMovies] = useState<TrendingMovies | any>()
   const [popularActors, setPopularActors] = useState<PopularActors | any>()
   const [topRated, setTopRated] = useState<TopRated | any>()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
+
     const fetch = async () => {
-      const responseTrendings = await getTrendings()
-      const responsePopularActors = await getPopularActors()
-      const responseTopRated = await getTopRated()
-      setTrendingsMovies(responseTrendings.data.results)
-      setPopularActors(responsePopularActors.data.results)
-      setTopRated(responseTopRated.data.results)
+      try {
+        const responseTrendings = await getTrendings()
+        const responsePopularActors = await getPopularActors()
+        const responseTopRated = await getTopRated()
+        setTrendingsMovies(responseTrendings.data.results)
+        setPopularActors(responsePopularActors.data.results)
+        setTopRated(responseTopRated.data.results)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        setLoading(false)
+      }
     }
     fetch()
   }, [])
@@ -118,11 +128,15 @@ const Home = () => {
 
   return (
     <S.Container>
-      <S.List
-        data={data}
-        stickyHeaderIndices={indices}
-        renderItem={({ item }: Item | any) => item.render()}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <S.List
+          data={data}
+          stickyHeaderIndices={indices}
+          renderItem={({ item }: Item | any) => item.render()}
+        />
+      )}
     </S.Container>
   )
 }

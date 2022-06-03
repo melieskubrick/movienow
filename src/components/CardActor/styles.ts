@@ -1,13 +1,13 @@
+import ImageProgress from 'react-native-image-progress'
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
   margin: 0 4px;
 `
 
-export const Image = styled.Image`
+export const Image = styled(ImageProgress).attrs({ borderRadius: 32 })`
   height: 64px;
   width: 64px;
-  border-radius: 32px;
 `
 
 export const Title = styled.Text`

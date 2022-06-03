@@ -1,11 +1,13 @@
 import { Dimensions } from 'react-native'
+import ImageProgress from 'react-native-image-progress'
 import LinearGradient from 'react-native-linear-gradient'
 import styled from 'styled-components/native'
 
-export const Container = styled.Image`
+export const Container = styled(ImageProgress).attrs({
+  borderRadius: 20
+})`
   height: 160px;
   width: ${Dimensions.get('window').width - 80}px;
-  border-radius: 20px;
   z-index: 0;
   position: absolute;
 `
