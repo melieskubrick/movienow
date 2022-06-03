@@ -2,11 +2,16 @@ import React from 'react'
 
 import * as S from './styles'
 
-const CardActor = () => {
+interface ICardActor {
+  name: string
+  uri: string
+}
+
+const CardActor = ({ name, uri }: ICardActor) => {
   return (
     <S.Container>
-      <S.Image source={require('../../assets/images/sonic.jpeg')} />
-      <S.Title numberOfLines={2}>Jennifer Connelly</S.Title>
+      <S.Image source={{ uri }} />
+      <S.Title numberOfLines={2}>{name}</S.Title>
     </S.Container>
   )
 }

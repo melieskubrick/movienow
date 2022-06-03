@@ -1,9 +1,11 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
 import CardActor from '../../components/CardActor'
 import CardMovie from '../../components/CardMovie'
+import { getPopularActors, getTopRated, getTrendings } from '../../services/api'
+import { getImage } from '../../utils/helpers/image'
 import Card from './Card'
 import Divider from './Divider'
 import * as S from './styles'
@@ -16,35 +18,24 @@ interface Item {
 
 const Home = () => {
   const carouselRef = useRef()
+  const [trendingMovies, setTrendingsMovies] = useState<TrendingMovies | any>()
+  const [popularActors, setPopularActors] = useState<PopularActors | any>()
+  const [topRated, setTopRated] = useState<TopRated | any>()
 
-  const renderItem = ({ item, index }) => {
-    return <Card />
-  }
-
-  const carouselItems = [
-    {
-      title: 'Item 1',
-      text: 'Text 1'
-    },
-    {
-      title: 'Item 2',
-      text: 'Text 2'
-    },
-    {
-      title: 'Item 3',
-      text: 'Text 3'
-    },
-    {
-      title: 'Item 4',
-      text: 'Text 4'
-    },
-    {
-      title: 'Item 5',
-      text: 'Text 5'
+  useEffect(() => {
+    const fetch = async () => {
+      const responseTrendings = await getTrendings()
+      const responsePopularActors = await getPopularActors()
+      const responseTopRated = await getTopRated()
+      setTrendingsMovies(responseTrendings.data.results)
+      setPopularActors(responsePopularActors.data.results)
+      setTopRated(responseTopRated.data.results)
     }
-  ]
+    fetch()
+  }, [])
 
   const { data, indices } = useMemo(() => {
+    console.log('trendingMovies', trendingMovies)
     const items: Item[] = [
       {
         key: 'featured',
@@ -56,12 +47,17 @@ const Home = () => {
         render: () => (
           <Carousel
             ref={carouselRef}
-            data={carouselItems}
-            renderItem={renderItem}
+            data={trendingMovies}
+            renderItem={({ item }) => (
+              <Card
+                title={item.title}
+                description={item.release_date}
+                uri={getImage(item.backdrop_path)}
+              />
+            )}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={Dimensions.get('window').width - 80}
             autoplay
-            loop
             autoplayDelay={4000}
             autoplayInterval={4000}
           />
@@ -79,8 +75,10 @@ const Home = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20 }}
             horizontal
-            data={carouselItems}
-            renderItem={(item) => <CardActor />}
+            data={popularActors}
+            renderItem={({ item }) => (
+              <CardActor name={item.name} uri={getImage(item.profile_path)} />
+            )}
           />
         )
       },
@@ -96,8 +94,14 @@ const Home = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20 }}
             horizontal
-            data={carouselItems}
-            renderItem={(item) => <CardMovie />}
+            data={topRated}
+            renderItem={({ item }) => (
+              <CardMovie
+                title={item.title}
+                rate={item.vote_average + ` (${item.vote_count})`}
+                uri={getImage(item.poster_path)}
+              />
+            )}
           />
         )
       }
@@ -110,7 +114,7 @@ const Home = () => {
       data: items,
       indices
     }
-  }, [carouselItems])
+  }, [trendingMovies, popularActors, topRated])
 
   return (
     <S.Container>
