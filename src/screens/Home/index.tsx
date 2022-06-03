@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/native'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
@@ -17,7 +18,11 @@ interface Item {
   isTitle?: boolean
 }
 
-const Home = () => {
+interface IHome {
+  navigation: NavigationProp<any>
+}
+
+const Home = ({ navigation }: IHome) => {
   const carouselRef = useRef()
   const [trendingMovies, setTrendingsMovies] = useState<TrendingMovies | any>()
   const [popularActors, setPopularActors] = useState<PopularActors | any>()
@@ -26,7 +31,6 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true)
-
     const fetch = async () => {
       try {
         const responseTrendings = await getTrendings()
@@ -45,7 +49,6 @@ const Home = () => {
   }, [])
 
   const { data, indices } = useMemo(() => {
-    console.log('trendingMovies', trendingMovies)
     const items: Item[] = [
       {
         key: 'featured',
@@ -56,10 +59,12 @@ const Home = () => {
         key: 'carousel',
         render: () => (
           <Carousel
+            loop
             ref={carouselRef}
             data={trendingMovies}
             renderItem={({ item }) => (
               <Card
+                onPress={() => navigation.navigate('DetailMovie', { id: item.id })}
                 title={item.title}
                 description={item.release_date}
                 uri={getImage(item.backdrop_path)}
@@ -107,6 +112,7 @@ const Home = () => {
             data={topRated}
             renderItem={({ item }) => (
               <CardMovie
+                onPress={() => navigation.navigate('DetailMovie', { id: item.id })}
                 title={item.title}
                 rate={item.vote_average + ` (${item.vote_count})`}
                 uri={getImage(item.poster_path)}
@@ -124,7 +130,7 @@ const Home = () => {
       data: items,
       indices
     }
-  }, [trendingMovies, popularActors, topRated])
+  }, [trendingMovies, navigation, popularActors, topRated])
 
   return (
     <S.Container>

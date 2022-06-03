@@ -7,7 +7,6 @@ import {
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
 import { NavigationContainer } from '@react-navigation/native'
-import AppLoading from 'expo-app-loading'
 import React from 'react'
 import { ThemeProvider } from 'styled-components/native'
 
